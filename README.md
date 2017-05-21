@@ -1,2 +1,2 @@
 # musicdoctor
-A Java Program for recommending music
+A Python Program for recommending music
