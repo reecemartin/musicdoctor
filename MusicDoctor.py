@@ -43,38 +43,53 @@ def get_catalogue():
     return catalogue
 
 if __name__ == "__main__":
+
+    # Loop allows for repeated suggestions
+    active = True
+    while active is True:
+
         # First prompt the user for a source artist
-        print("Welcome to Music Doctor")
-        source = input("I want artists like:")
+        print("Welcome to Music Doctor, enter -1 to exit.")
+
+        # Input is cleaned by converting to lowercase and removing whitespace
+        source = input("I want artists like:").lower().strip().replace(" ", "")
         print("Here are some suggestions:")
 
-        database = get_catalogue()
+        # Breaks loop if user enters -1
+        if source == "-1":
+            active = False
+            break
 
-        # Get the attributes for that artist
-        artist_store = [0, 0, 0, 0, 0]
-        for a in database:
-            if a[0] == source:
-                artist_store[0], artist_store[1], artist_store[2], artist_store[3], artist_store[4] = \
-                    a[1], a[2], a[3], a[4], a[5]
-                break
+        else:
 
-        queue = []
-        for a in database:
-            if len(queue) == 0:
-                queue.append((a[0], abs(artist_store[0] - a[1]) +
-                              abs(artist_store[1] - a[2]) + abs(artist_store[2] - a[3]) +
-                              abs(artist_store[3] - a[4]) + abs(artist_store[4] - a[5])))
-            else:
-                current_artist = (a[0], abs(artist_store[0] - a[1]) +
+            database = get_catalogue()
+
+            # Get the attributes for that artist
+            artist_store = [0, 0, 0, 0, 0]
+            for a in database:
+                if a[0].lower().strip().replace(" ", "") == source:
+                    artist_store[0], artist_store[1], artist_store[2], artist_store[3], artist_store[4] = \
+                        a[1], a[2], a[3], a[4], a[5]
+                    break
+
+            queue = []
+            for a in database:
+                if len(queue) == 0:
+                    queue.append((a[0], abs(artist_store[0] - a[1]) +
                                   abs(artist_store[1] - a[2]) + abs(artist_store[2] - a[3]) +
-                                  abs(artist_store[3] - a[4]) + abs(artist_store[4] - a[5]))
-                i = 0
-                while i < len(queue):
-                    if current_artist[1] < queue[i][1]:
-                        queue.insert(i, current_artist)
-                        break
-                    i += 1
+                                  abs(artist_store[3] - a[4]) + abs(artist_store[4] - a[5])))
+                else:
+                    current_artist = (a[0], abs(artist_store[0] - a[1]) +
+                                      abs(artist_store[1] - a[2]) + abs(artist_store[2] - a[3]) +
+                                      abs(artist_store[3] - a[4]) + abs(artist_store[4] - a[5]))
+                    i = 0
+                    while i < len(queue):
+                        if current_artist[1] < queue[i][1]:
+                            queue.insert(i, current_artist)
+                            break
+                        i += 1
 
-        queue.pop(0)
-        for x in range(5):
-            print(queue[x][0])
+            queue.pop(0)
+            for x in range(5):
+                print(queue[x][0])
+            print("\n \n")
