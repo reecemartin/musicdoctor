@@ -1,3 +1,5 @@
+# Used to optimize running time of MusicDoctor by making everything unreadable but easier to compile
+
 file = open('info.txt', 'r').readlines()
 
 dict_ = {}
