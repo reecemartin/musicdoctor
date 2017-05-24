@@ -8,20 +8,14 @@ def get_catalogue():
     :return: List of Tuple
     :rtype: List of Tuple
     """
-    # Artist Attributes in Catalogue:
-    # ===============================
-
-    # Artist Name / How sad / How heavy (i.e. pop would be light) / How much artistic license
-    # / How popular / How much electronic influence
-
-    # Each of the prior scores is on a float scale from 1 - 10
 
     return ast.literal_eval(open('data.dat').readline())
 
 
 def get_points(database, source):
     """
-    Get the difference between each artist in database and source
+    Compares the scores for the user entered artist and all other artists in the database in order to 
+    find the most closely related artists.
     
     :param dict database: Database of all artist's stats
     :param str source: Name of artist
