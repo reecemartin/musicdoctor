@@ -22,13 +22,13 @@ def get_points(database, source):
     """
 
     point_distri = {}
-
     for artist in database:
         if artist not in source:
             artist_dat = database[artist]  # Shortcut for current artist
             points = 0  # Start at 0 points different
-            for guy in source:
-                source_dat = database[guy]  # Shortcut for source
+            if source[0] != "":
+                for guy in source:
+                    source_dat = database[guy]  # Shortcut for source
 
                 for modifier in artist_dat:
                     # For each stat
@@ -36,10 +36,11 @@ def get_points(database, source):
                         points += abs(artist_dat[modifier] - source_dat[modifier])  # Add difference in stats to points
 
             # Assign the artist to their respective points
-            try:
-                point_distri[points / len(source)].append(artist)
-            except KeyError:
-                point_distri[points / len(source)] = [artist]
+            if len(source) != 0:
+                try:
+                    point_distri[points / len(source)].append(artist)
+                except KeyError:
+                    point_distri[points / len(source)] = [artist]
 
     return point_distri
 
@@ -50,12 +51,14 @@ if __name__ == "__main__":
     favoured_artists = []
 
     # First prompt the user for a source artist
-    print("Welcome to Music Doctor, enter \"kys\" to exit. Enter \"Suggest [Number of Suggestions]\" to get suggestions.")
+    print("Welcome to Music Doctor, enter \"Exit\" to exit. Enter \"Suggest [Number of Suggestions]\" to get"
+          " suggestions. Enter Catalogue to see all artists.")
 
     while True:
 
         # Input is cleaned by converting to lowercase and removing whitespace
         source = input("I want artists like:\n").upper().strip()
+
 
         # Splits Suggest and the number of suggestions requested
         if "SUGGEST" in source:
@@ -63,8 +66,19 @@ if __name__ == "__main__":
             source = source.split(" ")[0]
 
         # Breaks loop if user enters -1
-        if source == "KYS":
+        if source == "EXIT":
             break
+
+        # Prints the current Catalogue
+        elif source == "CATALOGUE":
+            point_distri = get_points(database, [""])
+            points = sorted(list(point_distri.keys()))
+            print("Catalogue:\n")
+
+            for artist in point_distri[0.0]:
+                print(artist)
+
+            print("\n\n")
 
         elif source == 'SUGGEST' and len(favoured_artists) > 0:
             point_distri = get_points(database,
