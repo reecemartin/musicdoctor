@@ -13,9 +13,9 @@ def get_catalogue():
 
 def get_points(database, source):
     """
-    Compares the scores for the user entered artist and all other artists in the database in order to 
+    Compares the scores for the user entered artist and all other artists in the database in order to
     find the most closely related artists.
-    
+
     :param dict database: Database of all artist's stats
     :param list of str source: Name of artist
     :return: dict of int: list of str
@@ -37,11 +37,12 @@ def get_points(database, source):
 
             # Assign the artist to their respective points
             try:
-                point_distri[points/len(source)].append(artist)
+                point_distri[points / len(source)].append(artist)
             except KeyError:
-                point_distri[points/len(source)] = [artist]
+                point_distri[points / len(source)] = [artist]
 
     return point_distri
+
 
 if __name__ == "__main__":
 
@@ -49,19 +50,25 @@ if __name__ == "__main__":
     favoured_artists = []
 
     # First prompt the user for a source artist
-    print("Welcome to Music Doctor, enter \"kys\" to exit. Enter \"Suggest\" to get suggestions.")
+    print("Welcome to Music Doctor, enter \"kys\" to exit. Enter \"Suggest [Number of Suggestions]\" to get suggestions.")
 
     while True:
 
         # Input is cleaned by converting to lowercase and removing whitespace
         source = input("I want artists like:\n").upper().strip()
 
+        # Splits Suggest and the number of suggestions requested
+        if "SUGGEST" in source:
+            num_suggestions = source.split(" ")[1]
+            source = source.split(" ")[0]
+
         # Breaks loop if user enters -1
         if source == "KYS":
             break
 
         elif source == 'SUGGEST' and len(favoured_artists) > 0:
-            point_distri = get_points(database, favoured_artists)  # Get difference of points between chosen artist and the rest
+            point_distri = get_points(database,
+                                      favoured_artists)  # Get difference of points between chosen artist and the rest
             points = sorted(list(point_distri.keys()))  # Sort the difference by lowest->highest difference
 
             print("Here are some suggestions:")
@@ -69,10 +76,15 @@ if __name__ == "__main__":
             # Show each artist from least difference in points to most and the percentage they matched the chosen artist
             count = 1
             for point in points:
-                percent = ((9 * (len(database[favoured_artists[0]]) - 1) - point) / (9 * (len(database[favoured_artists[0]]) - 1))) * 100
+                percent = ((9 * (len(database[favoured_artists[0]]) - 1) - point) / (
+                9 * (len(database[favoured_artists[0]]) - 1))) * 100
                 for artist in point_distri[point]:
                     print(str(count) + '. ' + artist + ' - Percentage matched: ' + str("%.2f" % percent + '%'))
                     count += 1
+
+                # Allows user to choose number of artists returned
+                if count >= int(num_suggestions) + 1:
+                    break
 
             print()
 
