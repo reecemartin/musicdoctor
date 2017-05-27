@@ -43,9 +43,9 @@ def get_points(database, source):
 
             # Assign the artist to their respective points
             try:
-                point_distri[points].append(artist)
+                point_distri[points/len(source)].append(artist)
             except KeyError:
-                point_distri[points] = [artist]
+                point_distri[points/len(source)] = [artist]
 
     return point_distri
 
