@@ -51,8 +51,8 @@ if __name__ == "__main__":
     favoured_artists = []
 
     # First prompt the user for a source artist
-    print("Welcome to Music Doctor, enter \"Exit\" to exit. Enter \"Suggest [Number of Suggestions]\" to get"
-          " suggestions. Enter Catalogue to see all artists.")
+    print('Welcome to Music Doctor, enter "Exit" to exit. Enter "Suggest [Number of Suggestions]" to get '\
+           'suggestions. Enter Catalogue to see all artists.')
 
     while True:
 
