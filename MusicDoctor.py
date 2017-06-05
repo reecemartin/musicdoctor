@@ -20,7 +20,6 @@ def get_points(database, source):
     :param list of str source: Name of artist
     :return: dict of int: list of str
     """
-
     point_distri = {}
     for artist in database:
         if artist not in source:
@@ -52,7 +51,7 @@ if __name__ == "__main__":
 
     # First prompt the user for a source artist
     print('Welcome to Music Doctor, enter "Exit" to exit. Enter "Suggest [Number of Suggestions]" to get '\
-           'suggestions. Enter Catalogue to see all artists.')
+           'suggestions. Enter Catalogue to see all artists. Enter "Random" for a random artist.')
 
     while True:
 
@@ -68,6 +67,7 @@ if __name__ == "__main__":
         # Breaks loop if user enters -1
         if source == "EXIT":
             break
+            
 
         # Prints the current Catalogue
         elif source == "CATALOGUE":
@@ -77,6 +77,16 @@ if __name__ == "__main__":
 
             for artist in point_distri[0.0]:
                 print(artist)
+
+            print("\n\n")
+            
+        elif source == "Random":
+            point_distri = get_points(database, [""])
+            points = sorted(list(point_distri.keys()))
+            print("Catalogue:\n")
+
+            random_artist = random.randrange(start, len(point_distri[0.0]))
+            print(point_distri[0.0][random_artist])
 
             print("\n\n")
 
