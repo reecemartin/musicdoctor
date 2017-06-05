@@ -1,1 +1,3 @@
-
+- User Interface in Python
+- Catalogue of at least 1000 artists
+- Machine Learning Use ~ Possibly TensorFlow
