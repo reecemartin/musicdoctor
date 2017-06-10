@@ -1,3 +1,4 @@
 - User Interface in Python
 - Catalogue of at least 1000 artists
-- Machine Learning Use ~ Possibly TensorFlow
+- Machine Learning Use ~ Possibly TensorFlow, or Sci Kit
+- Implement feature to create graphs of relatedness for different artists
