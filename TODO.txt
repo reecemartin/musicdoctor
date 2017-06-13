@@ -2,3 +2,4 @@
 - Catalogue of at least 1000 artists
 - Machine Learning Use ~ Possibly TensorFlow, or Sci Kit
 - Implement feature to create graphs of relatedness for different artists
+- Allow user to enter attributes and find artist that way, ie generate a new "artist" input
